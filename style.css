@@ -1,53 +1,62 @@
-body {
+/* General Reset */
+body, h1, h2, h3, p, a, button {
   margin: 0;
+  padding: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: #fff;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
   color: #333;
+  line-height: 1.6;
 }
 
 .hero {
-  position: relative;
-  background: url('images/january.jpg') no-repeat center center/cover;
-  height: 100vh;
+  background: url('images/hero-bg.jpg') no-repeat center center/cover;
+  color: white;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 100px 20px;
+  position: relative;
 }
 
-.hero .overlay {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 40px;
-  color: #fff;
-  width: 100%;
-}
-
-.hero h1 {
+.hero-content h1 {
   font-size: 3rem;
-  margin: 0;
+  font-weight: bold;
 }
 
-.hero p {
+.hero-content p {
   font-size: 1.2rem;
-  margin: 10px 0 30px;
+  margin: 10px 0 20px;
 }
 
-.btn-primary,
-.btn-secondary {
-  padding: 12px 24px;
-  background-color: #c2185b;
-  color: #fff;
-  text-decoration: none;
+.btn {
+  background: #d0006f;
+  color: white;
   border: none;
-  border-radius: 30px;
+  padding: 12px 20px;
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-block;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
-  background-color: #ad1457;
+.btn:hover {
+  background: #b0005f;
+}
+
+.cart-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #ff69b4;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
 }
 
 .section {
@@ -55,78 +64,79 @@ body {
   text-align: center;
 }
 
-.products {
+.product-grid {
   display: flex;
   flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
-  gap: 30px;
-  padding: 20px;
 }
 
 .product-card {
-  width: 220px;
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 12px;
-  background-color: #fafafa;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  text-align: center;
+  border: 1px solid #eee;
+  padding: 15px;
+  width: 250px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
 .product-card img {
   width: 100%;
+  height: auto;
   border-radius: 8px;
 }
 
-.product-card h3 {
-  margin: 10px 0;
+/* Cart Page Styles */
+.cart-header {
+  text-align: center;
+  padding: 30px 20px;
 }
 
-.product-card button {
-  margin-top: 10px;
-  background-color: #c2185b;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.product-card button:hover {
-  background-color: #ad1457;
-}
-
-.cart-icon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: #f06292;
-  padding: 10px;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-}
-
-.cart-icon img {
-  width: 24px;
-  margin-right: 5px;
-}
-
-#cart-count {
-  font-weight: bold;
-}
-
-.cart-container {
-  max-width: 700px;
-  margin: 0 auto;
+.cart-section {
   padding: 20px;
 }
 
-#cart-items {
-  margin-bottom: 20px;
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
 }
 
-.cart-summary {
+.cart-item img {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.cart-info {
+  flex: 1;
+  padding: 0 15px;
+}
+
+.cart-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.checkout-buttons {
   text-align: center;
+  margin: 30px 0;
+}
+
+#cart-total {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .product-grid {
+    flex-direction: column;
+    align-items: center;
+  }
 }
