@@ -1,0 +1,132 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  color: #333;
+}
+
+.hero {
+  position: relative;
+  background: url('images/january.jpg') no-repeat center center/cover;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero .overlay {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 40px;
+  color: #fff;
+  width: 100%;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin: 10px 0 30px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 24px;
+  background-color: #c2185b;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  background-color: #ad1457;
+}
+
+.section {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.product-card {
+  width: 220px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  margin: 10px 0;
+}
+
+.product-card button {
+  margin-top: 10px;
+  background-color: #c2185b;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.product-card button:hover {
+  background-color: #ad1457;
+}
+
+.cart-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #f06292;
+  padding: 10px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.cart-icon img {
+  width: 24px;
+  margin-right: 5px;
+}
+
+#cart-count {
+  font-weight: bold;
+}
+
+.cart-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#cart-items {
+  margin-bottom: 20px;
+}
+
+.cart-summary {
+  text-align: center;
+}
