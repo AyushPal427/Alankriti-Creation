@@ -5,55 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alankriti Creations</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Alankriti<br>Creations</h1>
-      <p>Customised Tote Bags – Your Style, Your Way</p>
-      <a href="#products" class="btn">Buy Now</a>
-    </div>
-    <a href="cart.html" class="cart-icon">
-      🛒 <span id="cart-count">0</span>
-    </a>
+  <!-- Header -->
+  <header>
+    <div class="brand">Alankriti Creations</div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#why">Why Us</a>
+      <a href="#products">Products</a>
+      <a href="cart.html">🛒 <span id="cart-count">0</span></a>
+    </nav>
   </header>
 
-  <section class="section" id="products">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Style Meets Sustainability</h1>
+      <p>Handcrafted Tote Bags with Elegance and Purpose</p>
+      <a href="#products" class="btn">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <h2>About Alankriti Creations</h2>
+    <p>We bring you eco-conscious fashion through handcrafted tote bags. At Alankriti Creations, every bag tells a story of sustainability, creativity, and craftsmanship. Made with love, designed for everyday elegance.</p>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-us" id="why">
+    <h2>Why Choose Us?</h2>
+    <div class="qualities">
+      <div class="quality-card">
+        <h3>🌱 Eco-Friendly</h3>
+        <p>We use sustainable materials to reduce environmental impact.</p>
+      </div>
+      <div class="quality-card">
+        <h3>👜 Unique Designs</h3>
+        <p>Each tote bag is thoughtfully designed with aesthetics and utility in mind.</p>
+      </div>
+      <div class="quality-card">
+        <h3>🧵 Handcrafted</h3>
+        <p>Our bags are handmade with care by local artisans.</p>
+      </div>
+      <div class="quality-card">
+        <h3>🚚 Fast Delivery</h3>
+        <p>Pan-India delivery with multiple payment options including COD.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Section -->
+  <section class="products" id="products">
     <h2>Our Collection</h2>
     <div class="product-grid">
-      <!-- Repeat for each product -->
       <div class="product-card">
         <img src="images/january.jpg" alt="Floral Tote" />
         <h3>Floral Tote</h3>
         <p>₹299</p>
-        <button class="btn" onclick="addToCart('Floral Tote', 299, 'images/january.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Floral Tote', 299, 'images/january.jpg')">Add to Cart</button>
       </div>
+
       <div class="product-card">
         <img src="images/march.jpg" alt="Canvas Love" />
         <h3>Canvas Love</h3>
         <p>₹299</p>
-        <button class="btn" onclick="addToCart('Canvas Love', 299, 'images/march.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Canvas Love', 299, 'images/march.jpg')">Add to Cart</button>
       </div>
+
       <div class="product-card">
         <img src="images/april.jpg" alt="Elegant Print" />
         <h3>Elegant Print</h3>
         <p>₹299</p>
-        <button class="btn" onclick="addToCart('Elegant Print', 299, 'images/april.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Elegant Print', 299, 'images/april.jpg')">Add to Cart</button>
       </div>
+
       <div class="product-card">
         <img src="images/may.jpg" alt="Eco Chic" />
         <h3>Eco Chic</h3>
         <p>₹299</p>
-        <button class="btn" onclick="addToCart('Eco Chic', 299, 'images/may.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Eco Chic', 299, 'images/may.jpg')">Add to Cart</button>
       </div>
+
       <div class="product-card">
         <img src="images/june.jpg" alt="Classic Tote" />
         <h3>Classic Tote</h3>
         <p>₹299</p>
-        <button class="btn" onclick="addToCart('Classic Tote', 299, 'images/june.jpg')">Add to Cart</button>
+        <button onclick="addToCart('Classic Tote', 299, 'images/june.jpg')">Add to Cart</button>
       </div>
     </div>
   </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Contact us: <a href="https://wa.me/919999999999">WhatsApp</a> | Email: support@alankriti.com</p>
+    <p>&copy; 2025 Alankriti Creations</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
