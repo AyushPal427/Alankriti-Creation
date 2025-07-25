@@ -4,63 +4,56 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alankriti Creations</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
   <header class="hero">
-    <div class="overlay">
+    <div class="hero-content">
       <h1>Alankriti<br>Creations</h1>
       <p>Customised Tote Bags – Your Style, Your Way</p>
-      <a href="#products" class="btn-primary">Buy Now</a>
+      <a href="#products" class="btn">Buy Now</a>
     </div>
     <a href="cart.html" class="cart-icon">
-      <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" alt="Cart" />
-      <span id="cart-count">0</span>
+      🛒 <span id="cart-count">0</span>
     </a>
   </header>
 
-  <section class="section">
-    <h2>Unleash Your Creativity</h2>
-    <p>Alankriti Creation Custom Tote Bags: Your Style, Your Way</p>
-  </section>
-
-  <section class="products" id="products">
-    <div class="product-card" data-name="Floral Tote" data-image="images/january.jpg">
-      <img src="images/january.jpg" alt="Floral Tote" />
-      <h3>Floral Tote</h3>
-      <p>₹299</p>
-      <button onclick="addToCart('Floral Tote', 299, 'images/january.jpg')">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Canvas Love" data-image="images/march.jpg">
-      <img src="images/march.jpg" alt="Canvas Love" />
-      <h3>Canvas Love</h3>
-      <p>₹299</p>
-      <button onclick="addToCart('Canvas Love', 299, 'images/march.jpg')">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Elegant Print" data-image="images/april.jpg">
-      <img src="images/april.jpg" alt="Elegant Print" />
-      <h3>Elegant Print</h3>
-      <p>₹299</p>
-      <button onclick="addToCart('Elegant Print', 299, 'images/april.jpg')">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Eco Chic" data-image="images/may.jpg">
-      <img src="images/may.jpg" alt="Eco Chic" />
-      <h3>Eco Chic</h3>
-      <p>₹299</p>
-      <button onclick="addToCart('Eco Chic', 299, 'images/may.jpg')">Add to Cart</button>
-    </div>
-
-    <div class="product-card" data-name="Classic Tote" data-image="images/june.jpg">
-      <img src="images/june.jpg" alt="Classic Tote" />
-      <h3>Classic Tote</h3>
-      <p>₹299</p>
-      <button onclick="addToCart('Classic Tote', 299, 'images/june.jpg')">Add to Cart</button>
+  <section class="section" id="products">
+    <h2>Our Collection</h2>
+    <div class="product-grid">
+      <!-- Repeat for each product -->
+      <div class="product-card">
+        <img src="images/january.jpg" alt="Floral Tote" />
+        <h3>Floral Tote</h3>
+        <p>₹299</p>
+        <button class="btn" onclick="addToCart('Floral Tote', 299, 'images/january.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="images/march.jpg" alt="Canvas Love" />
+        <h3>Canvas Love</h3>
+        <p>₹299</p>
+        <button class="btn" onclick="addToCart('Canvas Love', 299, 'images/march.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="images/april.jpg" alt="Elegant Print" />
+        <h3>Elegant Print</h3>
+        <p>₹299</p>
+        <button class="btn" onclick="addToCart('Elegant Print', 299, 'images/april.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="images/may.jpg" alt="Eco Chic" />
+        <h3>Eco Chic</h3>
+        <p>₹299</p>
+        <button class="btn" onclick="addToCart('Eco Chic', 299, 'images/may.jpg')">Add to Cart</button>
+      </div>
+      <div class="product-card">
+        <img src="images/june.jpg" alt="Classic Tote" />
+        <h3>Classic Tote</h3>
+        <p>₹299</p>
+        <button class="btn" onclick="addToCart('Classic Tote', 299, 'images/june.jpg')">Add to Cart</button>
+      </div>
     </div>
   </section>
-
-  <script src="script.js"></script>
 </body>
 </html>
