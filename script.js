@@ -1,78 +1,104 @@
-function updateCartCount() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  document.getElementById('cart-count').textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+// Load cart from localStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function saveCart() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
 }
 
 function addToCart(name, price, image) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const existing = cart.find(item => item.name === name);
   if (existing) {
-    existing.quantity++;
+    existing.qty++;
   } else {
-    cart.push({ name, price, image, quantity: 1 });
+    cart.push({ name, price, image, qty: 1 });
   }
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
+  saveCart();
   alert(`${name} added to cart!`);
 }
 
-function displayCart() {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const container = document.getElementById('cart-items');
-  const totalDiv = document.getElementById('cart-total');
-  container.innerHTML = '';
+// Update cart icon count
+function updateCartCount() {
+  const count = cart.reduce((total, item) => total + item.qty, 0);
+  document.getElementById('cart-count')?.innerText = count;
+}
+
+// Render cart page
+function renderCart() {
+  const cartItemsDiv = document.getElementById('cart-items');
+  const cartTotalSpan = document.getElementById('cart-total');
+  if (!cartItemsDiv || !cartTotalSpan) return;
+
+  cartItemsDiv.innerHTML = '';
 
   if (cart.length === 0) {
-    container.innerHTML = '<p>Your cart is empty.</p>';
-    totalDiv.textContent = '';
+    cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+    cartTotalSpan.innerText = '0';
     return;
   }
 
   let total = 0;
+
   cart.forEach((item, index) => {
+    const itemTotal = item.price * item.qty;
+    total += itemTotal;
+
     const itemDiv = document.createElement('div');
     itemDiv.className = 'cart-item';
-
     itemDiv.innerHTML = `
       <img src="${item.image}" alt="${item.name}" />
-      <div class="cart-info">
-        <strong>${item.name}</strong><br>₹${item.price} x ${item.quantity}
-      </div>
-      <div class="cart-actions">
-        <button onclick="changeQuantity(${index}, -1)">−</button>
-        <button onclick="changeQuantity(${index}, 1)">+</button>
-        <button onclick="removeItem(${index})">Remove</button>
+      <div class="item-info">
+        <h4>${item.name}</h4>
+        <p>Price: ₹${item.price}</p>
+        <div class="qty-controls">
+          <button onclick="changeQty(${index}, -1)">-</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </div>
+        <button onclick="removeItem(${index})" class="remove-btn">Remove</button>
       </div>
     `;
-
-    container.appendChild(itemDiv);
-    total += item.price * item.quantity;
+    cartItemsDiv.appendChild(itemDiv);
   });
 
-  totalDiv.textContent = `Total: ₹${total}`;
+  cartTotalSpan.innerText = total;
 }
 
-function changeQuantity(index, delta) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart[index].quantity += delta;
-  if (cart[index].quantity < 1) cart[index].quantity = 1;
-  localStorage.setItem('cart', JSON.stringify(cart));
-  displayCart();
-  updateCartCount();
+function changeQty(index, delta) {
+  cart[index].qty += delta;
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
+  saveCart();
+  renderCart();
 }
 
 function removeItem(index) {
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
   cart.splice(index, 1);
-  localStorage.setItem('cart', JSON.stringify(cart));
-  displayCart();
-  updateCartCount();
+  saveCart();
+  renderCart();
 }
 
-// On page load
+// Checkout via Razorpay
+function checkoutRazorpay() {
+  alert("Redirecting to Razorpay...");
+  // You can replace this with actual Razorpay checkout integration
+  window.open("https://rzp.io/l/your-payment-link", "_blank");
+}
+
+// Checkout via WhatsApp
+function checkoutWhatsApp() {
+  let message = 'Hello, I want to order:\n';
+  cart.forEach(item => {
+    message += `${item.name} x${item.qty} = ₹${item.price * item.qty}\n`;
+  });
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  message += `Total = ₹${total}`;
+  const encoded = encodeURIComponent(message);
+  window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('cart-items')) {
-    displayCart();
-  }
   updateCartCount();
+  renderCart();
 });
