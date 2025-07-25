@@ -14,7 +14,18 @@ function addToCart(name, price, image) {
     cart.push({ name, price, image, qty: 1 });
   }
   saveCart();
-  alert(`${name} added to cart!`);
+  showToast(`${name} added to cart!`); 
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
 }
 
 // Update cart icon count
