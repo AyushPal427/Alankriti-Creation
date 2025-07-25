@@ -20,14 +20,11 @@ function addToCart(name, price, image) {
 // Update cart icon count
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.qty, 0);
-  document.getElementById('cart-count')?.innerText = count;
+  const counter = document.getElementById('cart-count');
+  if (counter) counter.innerText = count;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  updateCartCount();
-});
-
-// Render cart page
+// Render cart items in cart.html
 function renderCart() {
   const cartItemsDiv = document.getElementById('cart-items');
   const cartTotalSpan = document.getElementById('cart-total');
@@ -86,7 +83,6 @@ function removeItem(index) {
 // Checkout via Razorpay
 function checkoutRazorpay() {
   alert("Redirecting to Razorpay...");
-  // You can replace this with actual Razorpay checkout integration
   window.open("https://rzp.io/l/your-payment-link", "_blank");
 }
 
@@ -102,7 +98,8 @@ function checkoutWhatsApp() {
   window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank');
 }
 
+// Run on page load
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
-  renderCart();
+  renderCart(); // Only works if on cart.html
 });
