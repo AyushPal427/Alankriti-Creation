@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Your Cart</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <header class="section">
+  <header class="cart-header">
     <h1>Your Shopping Cart</h1>
-    <a href="index.html" class="btn-secondary">← Continue Shopping</a>
+    <a href="index.html" class="btn">← Continue Shopping</a>
   </header>
 
-  <section class="cart-container">
-    <div id="cart-items"></div>
-    <div class="cart-summary">
-      <p><strong>Total: ₹<span id="total-price">0</span></strong></p>
-      <a href="https://wa.me/918700000000?text=I'm%20interested%20in%20placing%20an%20order!" class="btn-primary">Checkout via WhatsApp</a>
-    </div>
-  </section>
+  <section class="cart-section" id="cart-items"></section>
+  <div id="cart-total"></div>
 
-  <script src="script.js"></script>
+  <div class="checkout-buttons">
+    <a href="https://rzp.io/l/samplepay" class="btn">Checkout with Razorpay</a>
+    <a href="https://wa.me/919000000000?text=I want to order from Alankriti Creations" class="btn">Order via WhatsApp</a>
+  </div>
 </body>
 </html>
