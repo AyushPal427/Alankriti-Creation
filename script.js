@@ -23,6 +23,10 @@ function updateCartCount() {
   document.getElementById('cart-count')?.innerText = count;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+});
+
 // Render cart page
 function renderCart() {
   const cartItemsDiv = document.getElementById('cart-items');
