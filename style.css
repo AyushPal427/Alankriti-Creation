@@ -69,6 +69,28 @@ nav a:hover {
   background-color: #e55fa3;
 }
 
+.toast {
+  visibility: hidden;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4BB543;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  z-index: 9999;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 50px;
+}
+
 /* Cart Page */
 .cart-page {
   padding: 40px 20px;
