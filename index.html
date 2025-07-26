@@ -29,8 +29,23 @@
 <!-- ✅ Login/Signup Form Section -->
 <section class="login-container" id="loginContainer">
   <h2 id="loginTitle">Login</h2>
-  <input type="text" id="usernameInput" placeholder="Enter your name" />
-  <button onclick="loginUser()">Login</button>
+
+  <!-- Login Fields -->
+  <div id="loginForm">
+    <input type="email" id="loginEmail" placeholder="Email ID" required />
+    <input type="password" id="loginPassword" placeholder="Password" required />
+    <button onclick="loginUser()">Login</button>
+  </div>
+
+  <!-- Signup Fields (Initially hidden) -->
+  <div id="signupForm" style="display: none;">
+    <input type="text" id="signupName" placeholder="Full Name" required />
+    <input type="email" id="signupEmail" placeholder="Email ID" required />
+    <input type="password" id="signupPassword" placeholder="Password" required />
+    <input type="password" id="signupConfirm" placeholder="Confirm Password" required />
+    <button onclick="registerUser()">Sign Up</button>
+  </div>
+
   <p id="toggleLogin" onclick="toggleLogin()">Don't have an account? Sign up</p>
 </section>
 
