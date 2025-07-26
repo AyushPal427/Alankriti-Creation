@@ -26,6 +26,10 @@ function showToast(message) {
   }
 }
 
+function closeLoginModal() {
+  document.getElementById("loginModal").style.display = "none";
+}
+
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.qty, 0);
   const counter = document.getElementById('cart-count');
