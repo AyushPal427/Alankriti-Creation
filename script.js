@@ -36,10 +36,9 @@ function updateCartCount() {
 }
 
 function toggleMenu() {
-  const menu = document.getElementById("sideMenu");
-  if (menu) {
-    menu.classList.toggle("show");
-  }
+  const sideMenu = document.getElementById("sideMenu");
+  sideMenu.classList.toggle("show");
+}
 }
 
 // Render cart items in cart.html
@@ -110,16 +109,29 @@ function checkoutRazorpay() {
     description: "Tote Bag Order",
     image: "images/logo.png", // Optional logo
     handler: function (response) {
-      // Payment succeeded
-      localStorage.removeItem("cart");
-      window.location.href = "success.html";
-    },
+  // Save order info for manual tracking
+  const orderInfo = {
+    paymentId: response.razorpay_payment_id,
+    amount: totalAmount,
+    status: "success",
+    date: new Date().toLocaleString()
+  };
+  localStorage.setItem("lastOrder", JSON.stringify(orderInfo));
+
+  localStorage.removeItem("cart");
+  window.location.href = "success.html";
+},
     modal: {
-      ondismiss: function () {
-        // Payment cancelled or failed
-        window.location.href = "failure.html";
-      }
-    },
+  ondismiss: function () {
+    const failedOrder = {
+      status: "failed",
+      amount: totalAmount,
+      date: new Date().toLocaleString()
+    };
+    localStorage.setItem("lastOrder", JSON.stringify(failedOrder));
+    window.location.href = "failure.html";
+  }
+},
     prefill: {
       name: "",
       email: "",
