@@ -22,9 +22,14 @@
     <a href="#products">Products</a>
     <a href="cart.html">🛒 <span id="cart-count">0</span></a>
   </div>
-  <span id="user-greeting">
-  <a href="#" onclick="toggleLoginBox()" id="loginLink">👤 Login</a>
-</span>
+
+  <!-- 👇 Add this new wrapper for login/signup -->
+  <div id="authButtons">
+    <button onclick="document.getElementById('loginContainer').scrollIntoView()">Login / Signup</button>
+  </div>
+
+  <!-- 👇 This shows greeting after login -->
+  <span id="user-greeting"></span>
 </nav>
 </header>
 
