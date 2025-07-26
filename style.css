@@ -71,9 +71,9 @@ nav a:hover {
 /* Side Menu */
 .side-menu {
   position: fixed;
-  top: 60px; /* below the header */
+  top: 70px; /* Matches header height */
   left: -250px;
-  height: calc(100vh - 60px); /* full height minus header */
+  height: calc(100vh - 70px); /* Full height minus header */
   width: 220px;
   background-color: #333;
   color: white;
@@ -84,15 +84,14 @@ nav a:hover {
   z-index: 999;
 }
 
-.side-menu {
-  height: 100vh;            /* Full viewport height */
-  overflow-y: auto;         /* Scroll if content overflows */
-  padding-top: 60px;        /* Leaves space below the brand/header */
+.side-menu.show {
+  left: 0;
 }
 
 .side-menu ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .side-menu ul li {
