@@ -106,6 +106,59 @@ nav a:hover {
   max-width: 900px;
   margin: auto;
 }
+
+.confirmation-container, .tracking-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 2rem;
+  text-align: center;
+  background: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.confirmation-container.success h1 {
+  color: #28a745;
+}
+
+.confirmation-container.failure h1 {
+  color: #dc3545;
+}
+
+.btn {
+  display: inline-block;
+  margin: 10px;
+  padding: 12px 24px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.tracking-steps {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.tracking-steps li {
+  padding: 10px;
+  border-left: 5px solid gray;
+  margin: 10px 0;
+}
+
+.tracking-steps li.done {
+  border-color: green;
+  color: green;
+}
+
+.tracking-steps li.pending {
+  border-color: orange;
+  color: orange;
+}
+
 .cart-page h2 {
   text-align: center;
   margin-bottom: 30px;
