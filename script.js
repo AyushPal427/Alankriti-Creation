@@ -14,7 +14,7 @@ function addToCart(name, price, image) {
     cart.push({ name, price, image, qty: 1 });
   }
   saveCart();
-  showToast(`${name} added to cart!`); 
+  showToast(`${name} added to cart!`);
 }
 
 function showToast(message) {
@@ -28,7 +28,6 @@ function showToast(message) {
   }
 }
 
-// Update cart icon count
 function updateCartCount() {
   const count = cart.reduce((total, item) => total + item.qty, 0);
   const counter = document.getElementById('cart-count');
@@ -40,14 +39,12 @@ function toggleMenu() {
   sideMenu.classList.toggle("show");
 }
 
-// Render cart items in cart.html
 function renderCart() {
   const cartItemsDiv = document.getElementById('cart-items');
   const cartTotalSpan = document.getElementById('cart-total');
   if (!cartItemsDiv || !cartTotalSpan) return;
 
   cartItemsDiv.innerHTML = '';
-
   if (cart.length === 0) {
     cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
     cartTotalSpan.innerText = '0';
@@ -96,41 +93,38 @@ function removeItem(index) {
   renderCart();
 }
 
-// Checkout via Razorpay
 function checkoutRazorpay() {
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   const options = {
-    key: "YOUR_RAZORPAY_KEY", // Replace with your actual key
-    amount: totalAmount * 100, // Amount in paise
+    key: "YOUR_RAZORPAY_KEY",
+    amount: totalAmount * 100,
     currency: "INR",
     name: "Alankriti Creations",
     description: "Tote Bag Order",
-    image: "images/logo.png", // Optional logo
+    image: "images/logo.png",
     handler: function (response) {
-  // Save order info for manual tracking
-  const orderInfo = {
-    paymentId: response.razorpay_payment_id,
-    amount: totalAmount,
-    status: "success",
-    date: new Date().toLocaleString()
-  };
-  localStorage.setItem("lastOrder", JSON.stringify(orderInfo));
-
-  localStorage.removeItem("cart");
-  window.location.href = "success.html";
-},
+      const orderInfo = {
+        paymentId: response.razorpay_payment_id,
+        amount: totalAmount,
+        status: "success",
+        date: new Date().toLocaleString()
+      };
+      localStorage.setItem("lastOrder", JSON.stringify(orderInfo));
+      localStorage.removeItem("cart");
+      window.location.href = "success.html";
+    },
     modal: {
-  ondismiss: function () {
-    const failedOrder = {
-      status: "failed",
-      amount: totalAmount,
-      date: new Date().toLocaleString()
-    };
-    localStorage.setItem("lastOrder", JSON.stringify(failedOrder));
-    window.location.href = "failure.html";
-  }
-},
+      ondismiss: function () {
+        const failedOrder = {
+          status: "failed",
+          amount: totalAmount,
+          date: new Date().toLocaleString()
+        };
+        localStorage.setItem("lastOrder", JSON.stringify(failedOrder));
+        window.location.href = "failure.html";
+      }
+    },
     prefill: {
       name: "",
       email: "",
@@ -145,7 +139,6 @@ function checkoutRazorpay() {
   rzp.open();
 }
 
-// Checkout via WhatsApp
 function checkoutWhatsApp() {
   let message = 'Hello, I want to order:\n';
   cart.forEach(item => {
@@ -157,7 +150,7 @@ function checkoutWhatsApp() {
   window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank');
 }
 
-// Run on page load
+// DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
   renderCart?.();
@@ -176,20 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
       authButtons.style.display = 'none';
     }
   }
-}); // Only works if on cart.html and will not throw error if not present
-
-  // 🆕 Login greeting feature
-  const user = JSON.parse(localStorage.getItem('user'));
-  const loggedIn = localStorage.getItem('loggedIn') === 'true';
-
-  if (loggedIn && user?.name) {
-    const userGreeting = document.getElementById('user-greeting');
-    if (userGreeting) {
-      userGreeting.textContent = `Hi, ${user.name}`;
-    }
-  }
 });
 
+// Login/Signup Functions
 function toggleLogin() {
   const isLogin = document.getElementById("loginForm").style.display !== "none";
   document.getElementById("loginForm").style.display = isLogin ? "none" : "block";
