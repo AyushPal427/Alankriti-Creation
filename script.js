@@ -160,7 +160,23 @@ function checkoutWhatsApp() {
 // Run on page load
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
-  renderCart?.(); // Only works if on cart.html and will not throw error if not present
+  renderCart?.();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const loggedIn = localStorage.getItem('loggedIn') === 'true';
+
+  if (loggedIn && user?.name) {
+    const userGreeting = document.getElementById('user-greeting');
+    if (userGreeting) {
+      userGreeting.textContent = `Hi, ${user.name}`;
+    }
+
+    const authButtons = document.getElementById('authButtons');
+    if (authButtons) {
+      authButtons.style.display = 'none';
+    }
+  }
+}); // Only works if on cart.html and will not throw error if not present
 
   // 🆕 Login greeting feature
   const user = JSON.parse(localStorage.getItem('user'));
