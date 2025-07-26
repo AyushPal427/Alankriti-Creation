@@ -39,7 +39,6 @@ function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
   sideMenu.classList.toggle("show");
 }
-}
 
 // Render cart items in cart.html
 function renderCart() {
