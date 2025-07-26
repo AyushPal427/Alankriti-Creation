@@ -173,6 +173,13 @@ nav {
   margin: 10px;
 }
 
+#toggleLogin {
+  cursor: pointer;
+  color: #333;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
 #form-toggle {
   margin-bottom: 20px;
 }
