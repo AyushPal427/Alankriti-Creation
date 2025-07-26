@@ -24,37 +24,44 @@
   </div>
 
   <!-- 👇 Add this new wrapper for login/signup -->
-  <div id="authButtons">
-    <button onclick="document.getElementById('loginContainer').scrollIntoView()">Login / Signup</button>
-  </div>
+  <!-- 👇 Auth Buttons -->
+<div id="authButtons">
+  <button onclick="openLoginModal()">Login / Signup</button>
+</div>
 
-  <!-- 👇 This shows greeting after login -->
+<!-- 👇 Greeting and Logout -->
+<div id="userAuth" style="display: none;">
   <span id="user-greeting"></span>
+  <button onclick="logoutUser()">Logout</button>
+</div>
 </nav>
 </header>
 
-<!-- ✅ Login/Signup Form Section -->
-<section class="login-container" id="loginContainer">
-  <h2 id="loginTitle">Login</h2>
+<!-- ✅ Login/Signup Modal -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeLoginModal()">&times;</span>
+    <h2 id="loginTitle">Login</h2>
 
-  <!-- Login Fields -->
-  <div id="loginForm">
-    <input type="email" id="loginEmail" placeholder="Email ID" required />
-    <input type="password" id="loginPassword" placeholder="Password" required />
-    <button onclick="loginUser()">Login</button>
+    <!-- Login Form -->
+    <div id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email ID" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button onclick="loginUser()">Login</button>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signupForm" style="display: none;">
+      <input type="text" id="signupName" placeholder="Full Name" required />
+      <input type="email" id="signupEmail" placeholder="Email ID" required />
+      <input type="password" id="signupPassword" placeholder="Password" required />
+      <input type="password" id="signupConfirm" placeholder="Confirm Password" required />
+      <button onclick="registerUser()">Sign Up</button>
+    </div>
+
+    <p id="toggleLogin" onclick="toggleLogin()">Don't have an account? Sign up</p>
   </div>
-
-  <!-- Signup Fields (Initially hidden) -->
-  <div id="signupForm" style="display: none;">
-    <input type="text" id="signupName" placeholder="Full Name" required />
-    <input type="email" id="signupEmail" placeholder="Email ID" required />
-    <input type="password" id="signupPassword" placeholder="Password" required />
-    <input type="password" id="signupConfirm" placeholder="Confirm Password" required />
-    <button onclick="registerUser()">Sign Up</button>
-  </div>
-
-  <p id="toggleLogin" onclick="toggleLogin()">Don't have an account? Sign up</p>
-</section>
+</div>
 
 <!-- ✅ Side Menu placed right below header -->
 <div class="side-menu" id="sideMenu">
