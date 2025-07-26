@@ -35,6 +35,10 @@ function updateCartCount() {
   if (counter) counter.innerText = count;
 }
 
+function toggleMenu() {
+  document.getElementById('sideMenu').classList.toggle('show');
+}
+
 // Render cart items in cart.html
 function renderCart() {
   const cartItemsDiv = document.getElementById('cart-items');
