@@ -174,51 +174,53 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Handle login/signup form
-document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm");
-  const toggle = document.getElementById("toggleLogin");
+function toggleLogin() {
+  const isLogin = document.getElementById("loginForm").style.display !== "none";
+  document.getElementById("loginForm").style.display = isLogin ? "none" : "block";
+  document.getElementById("signupForm").style.display = isLogin ? "block" : "none";
+  document.getElementById("loginTitle").innerText = isLogin ? "Sign Up" : "Login";
+  document.getElementById("toggleLogin").innerText = isLogin
+    ? "Already have an account? Login"
+    : "Don't have an account? Sign up";
+}
 
-  if (toggle) {
-    toggle.addEventListener("click", () => {
-      const isSignup = loginForm.dataset.signup === "true";
-      loginForm.dataset.signup = !isSignup;
-      loginForm.querySelector("button").textContent = isSignup ? "Login" : "Sign Up";
-      toggle.textContent = isSignup
-        ? "Don't have an account? Sign up"
-        : "Already have an account? Login";
-    });
+function registerUser() {
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById("signupConfirm").value;
+
+  if (!name || !email || !password || !confirm) {
+    alert("Please fill in all fields.");
+    return;
   }
 
-  if (loginForm) {
-    loginForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = loginForm.username.value.trim();
-      const email = loginForm.email.value.trim();
-      const password = loginForm.password.value;
-
-      const isSignup = loginForm.dataset.signup === "true";
-
-      if (isSignup) {
-        const user = { name, email, password };
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("loggedIn", "true");
-        alert("Signup successful!");
-        window.location.href = "index.html";
-      } else {
-        const savedUser = JSON.parse(localStorage.getItem("user"));
-        if (
-          savedUser &&
-          savedUser.email === email &&
-          savedUser.password === password
-        ) {
-          localStorage.setItem("loggedIn", "true");
-          alert("Login successful!");
-          window.location.href = "index.html";
-        } else {
-          alert("Invalid credentials.");
-        }
-      }
-    });
+  if (password !== confirm) {
+    alert("Passwords do not match.");
+    return;
   }
-});
+
+  const user = { name, email, password };
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("loggedIn", "true");
+  alert("Signup successful!");
+  window.location.href = "index.html";
+}
+
+function loginUser() {
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  const savedUser = JSON.parse(localStorage.getItem("user"));
+  if (
+    savedUser &&
+    savedUser.email === email &&
+    savedUser.password === password
+  ) {
+    localStorage.setItem("loggedIn", "true");
+    alert("Login successful!");
+    window.location.href = "index.html";
+  } else {
+    alert("Invalid email or password.");
+  }
+}
