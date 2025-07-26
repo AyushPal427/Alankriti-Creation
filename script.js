@@ -1,112 +1,102 @@
-// ===== Toast Notification =====
-function showToast(message) {
-  const toast = document.getElementById("toast");
-  toast.textContent = message;
-  toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 3000);
+// Toggle menu
+function toggleMenu() {
+  const sideMenu = document.getElementById('sideMenu');
+  sideMenu.classList.toggle('active');
 }
 
-// ===== Open Modals =====
-document.getElementById("loginBtn").addEventListener("click", () => {
-  document.getElementById("loginModal").style.display = "block";
-});
-document.getElementById("signupBtn").addEventListener("click", () => {
-  document.getElementById("signupModal").style.display = "block";
-});
+// Login/Signup Modal Functions
+function openLoginModal() {
+  document.getElementById('loginModal').style.display = 'block';
+  showLoginForm();
+}
 
-// ===== Close Modals =====
-document.querySelectorAll(".close").forEach(closeBtn => {
-  closeBtn.addEventListener("click", () => {
-    closeBtn.closest(".modal").style.display = "none";
-  });
-});
+function closeLoginModal() {
+  document.getElementById('loginModal').style.display = 'none';
+}
 
-// ===== Signup Form Handling =====
-document.getElementById("signupForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const name = document.getElementById("signupName").value.trim();
-  const email = document.getElementById("signupEmail").value.trim();
-  const pass = document.getElementById("signupPassword").value;
-  const confirm = document.getElementById("signupConfirmPassword").value;
+function toggleLogin() {
+  const loginForm = document.getElementById('loginForm');
+  const signupForm = document.getElementById('signupForm');
+  const loginTitle = document.getElementById('loginTitle');
+  const toggleText = document.getElementById('toggleLogin');
 
-  if (!name || !email || !pass || !confirm) {
-    showToast("Please fill all fields");
-    return;
-  }
-
-  if (pass !== confirm) {
-    showToast("Passwords do not match");
-    return;
-  }
-
-  // Save to localStorage
-  localStorage.setItem("user", JSON.stringify({ name, email, password: pass }));
-  localStorage.setItem("isLoggedIn", "true");
-
-  document.getElementById("signupModal").style.display = "none";
-  updateAuthUI();
-  showToast("Signup successful! Logged in.");
-});
-
-// ===== Login Form Handling =====
-document.getElementById("loginForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const email = document.getElementById("loginEmail").value.trim();
-  const pass = document.getElementById("loginPassword").value;
-
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user || user.email !== email || user.password !== pass) {
-    showToast("Invalid credentials");
-    return;
-  }
-
-  localStorage.setItem("isLoggedIn", "true");
-  document.getElementById("loginModal").style.display = "none";
-  updateAuthUI();
-  showToast("Login successful!");
-});
-
-// ===== Logout =====
-document.getElementById("logoutBtn").addEventListener("click", () => {
-  localStorage.setItem("isLoggedIn", "false");
-  updateAuthUI();
-  showToast("Logged out!");
-});
-
-// ===== Auth UI Update =====
-function updateAuthUI() {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const user = JSON.parse(localStorage.getItem("user")) || {};
-
-  const loginBtn = document.getElementById("loginBtn");
-  const signupBtn = document.getElementById("signupBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const greeting = document.getElementById("user-greeting");
-
-  if (isLoggedIn && user.name) {
-    loginBtn.style.display = "none";
-    signupBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    greeting.textContent = `👋 Hi, ${user.name.split(" ")[0]}`;
-    greeting.style.display = "inline-block";
+  if (loginForm.style.display === 'none') {
+    showLoginForm();
   } else {
-    loginBtn.style.display = "inline-block";
-    signupBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    greeting.textContent = "";
-    greeting.style.display = "none";
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'block';
+    loginTitle.innerText = 'Sign Up';
+    toggleText.innerText = 'Already have an account? Login';
   }
 }
 
-// ===== Close modal on click outside =====
-window.addEventListener("click", e => {
-  document.querySelectorAll(".modal").forEach(modal => {
-    if (e.target === modal) modal.style.display = "none";
-  });
-});
+function showLoginForm() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('signupForm').style.display = 'none';
+  document.getElementById('loginTitle').innerText = 'Login';
+  document.getElementById('toggleLogin').innerText = "Don't have an account? Sign up";
+}
 
-// ===== Init =====
-document.addEventListener("DOMContentLoaded", () => {
-  updateAuthUI();
-});
+// Register User
+function registerUser() {
+  const name = document.getElementById('signupName').value;
+  const email = document.getElementById('signupEmail').value;
+  const password = document.getElementById('signupPassword').value;
+  const confirm = document.getElementById('signupConfirm').value;
+
+  if (password !== confirm) {
+    alert("Passwords do not match");
+    return;
+  }
+
+  const user = { name, email, password };
+  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('isLoggedIn', 'true');
+  updateUI();
+  closeLoginModal();
+}
+
+// Login User
+function loginUser() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+
+  if (storedUser && storedUser.email === email && storedUser.password === password) {
+    localStorage.setItem('isLoggedIn', 'true');
+    updateUI();
+    closeLoginModal();
+  } else {
+    alert("Invalid credentials");
+  }
+}
+
+// Update UI after login/signup
+function updateUI() {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const authButtons = document.getElementById('authButtons');
+  const userAuth = document.getElementById('userAuth');
+  const greeting = document.getElementById('user-greeting');
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  if (isLoggedIn && user) {
+    authButtons.style.display = 'none';
+    userAuth.style.display = 'block';
+    greeting.innerText = `Hello, ${user.name}`;
+  } else {
+    authButtons.style.display = 'block';
+    userAuth.style.display = 'none';
+  }
+}
+
+// Logout
+function logoutUser() {
+  localStorage.setItem('isLoggedIn', 'false');
+  updateUI();
+}
+
+// Initial UI Check
+window.onload = function () {
+  updateUI();
+};
