@@ -58,17 +58,23 @@ nav a:hover {
   color: white;
 }
 
-#user-greeting {
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
   margin-right: 15px;
-  font-weight: bold;
+  text-decoration: none;
   color: #333;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: auto;
+#user-greeting {
+  font-weight: bold;
+  color: #333;
+  margin-right: 10px;
 }
 
 /* Hamburger Icon */
