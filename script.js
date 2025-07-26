@@ -93,8 +93,38 @@ function removeItem(index) {
 
 // Checkout via Razorpay
 function checkoutRazorpay() {
-  alert("Redirecting to Razorpay...");
-  window.open("https://rzp.io/l/your-payment-link", "_blank");
+  const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const options = {
+    key: "YOUR_RAZORPAY_KEY", // Replace with your actual key
+    amount: totalAmount * 100, // Amount in paise
+    currency: "INR",
+    name: "Alankriti Creations",
+    description: "Tote Bag Order",
+    image: "images/logo.png", // Optional logo
+    handler: function (response) {
+      // Payment succeeded
+      localStorage.removeItem("cart");
+      window.location.href = "success.html";
+    },
+    modal: {
+      ondismiss: function () {
+        // Payment cancelled or failed
+        window.location.href = "failure.html";
+      }
+    },
+    prefill: {
+      name: "",
+      email: "",
+      contact: ""
+    },
+    theme: {
+      color: "#333"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
 }
 
 // Checkout via WhatsApp
