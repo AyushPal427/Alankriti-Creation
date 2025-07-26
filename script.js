@@ -1,102 +1,232 @@
-// Toggle menu
-function toggleMenu() {
-  const sideMenu = document.getElementById('sideMenu');
-  sideMenu.classList.toggle('active');
+// Load cart from localStorage
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function saveCart() {
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
 }
 
-// Login/Signup Modal Functions
-function openLoginModal() {
-  document.getElementById('loginModal').style.display = 'block';
-  showLoginForm();
-}
-
-function closeLoginModal() {
-  document.getElementById('loginModal').style.display = 'none';
-}
-
-function toggleLogin() {
-  const loginForm = document.getElementById('loginForm');
-  const signupForm = document.getElementById('signupForm');
-  const loginTitle = document.getElementById('loginTitle');
-  const toggleText = document.getElementById('toggleLogin');
-
-  if (loginForm.style.display === 'none') {
-    showLoginForm();
+function addToCart(name, price, image) {
+  const existing = cart.find(item => item.name === name);
+  if (existing) {
+    existing.qty++;
   } else {
-    loginForm.style.display = 'none';
-    signupForm.style.display = 'block';
-    loginTitle.innerText = 'Sign Up';
-    toggleText.innerText = 'Already have an account? Login';
+    cart.push({ name, price, image, qty: 1 });
+  }
+  saveCart();
+  showToast(`${name} added to cart!`);
+}
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  if (toast) {
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
   }
 }
 
-function showLoginForm() {
-  document.getElementById('loginForm').style.display = 'block';
-  document.getElementById('signupForm').style.display = 'none';
-  document.getElementById('loginTitle').innerText = 'Login';
-  document.getElementById('toggleLogin').innerText = "Don't have an account? Sign up";
+function updateCartCount() {
+  const count = cart.reduce((total, item) => total + item.qty, 0);
+  const counter = document.getElementById('cart-count');
+  if (counter) counter.innerText = count;
 }
 
-// Register User
+function toggleMenu() {
+  const sideMenu = document.getElementById("sideMenu");
+  sideMenu.classList.toggle("show");
+}
+
+function renderCart() {
+  const cartItemsDiv = document.getElementById('cart-items');
+  const cartTotalSpan = document.getElementById('cart-total');
+  if (!cartItemsDiv || !cartTotalSpan) return;
+
+  cartItemsDiv.innerHTML = '';
+
+  if (cart.length === 0) {
+    cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+    cartTotalSpan.innerText = '0';
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const itemTotal = item.price * item.qty;
+    total += itemTotal;
+
+    const itemDiv = document.createElement('div');
+    itemDiv.className = 'cart-item';
+    itemDiv.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" />
+      <div class="item-info">
+        <h4>${item.name}</h4>
+        <p>Price: ₹${item.price}</p>
+        <div class="qty-controls">
+          <button onclick="changeQty(${index}, -1)">-</button>
+          <span>${item.qty}</span>
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </div>
+        <button onclick="removeItem(${index})" class="remove-btn">Remove</button>
+      </div>
+    `;
+    cartItemsDiv.appendChild(itemDiv);
+  });
+
+  cartTotalSpan.innerText = total;
+}
+
+function changeQty(index, delta) {
+  cart[index].qty += delta;
+  if (cart[index].qty <= 0) {
+    cart.splice(index, 1);
+  }
+  saveCart();
+  renderCart();
+}
+
+function removeItem(index) {
+  cart.splice(index, 1);
+  saveCart();
+  renderCart();
+}
+
+function checkoutRazorpay() {
+  const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const options = {
+    key: "YOUR_RAZORPAY_KEY", // Replace with your actual key
+    amount: totalAmount * 100,
+    currency: "INR",
+    name: "Alankriti Creations",
+    description: "Tote Bag Order",
+    image: "images/logo.png",
+    handler: function (response) {
+      const orderInfo = {
+        paymentId: response.razorpay_payment_id,
+        amount: totalAmount,
+        status: "success",
+        date: new Date().toLocaleString()
+      };
+      localStorage.setItem("lastOrder", JSON.stringify(orderInfo));
+      localStorage.removeItem("cart");
+      window.location.href = "success.html";
+    },
+    modal: {
+      ondismiss: function () {
+        const failedOrder = {
+          status: "failed",
+          amount: totalAmount,
+          date: new Date().toLocaleString()
+        };
+        localStorage.setItem("lastOrder", JSON.stringify(failedOrder));
+        window.location.href = "failure.html";
+      }
+    },
+    prefill: {
+      name: "",
+      email: "",
+      contact: ""
+    },
+    theme: {
+      color: "#333"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
+}
+
+function checkoutWhatsApp() {
+  let message = 'Hello, I want to order:\n';
+  cart.forEach(item => {
+    message += `${item.name} x${item.qty} = ₹${item.price * item.qty}\n`;
+  });
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  message += `Total = ₹${total}`;
+  const encoded = encodeURIComponent(message);
+  window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartCount();
+  renderCart?.();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const loggedIn = localStorage.getItem('loggedIn') === 'true';
+
+  if (loggedIn && user?.name) {
+    const userGreeting = document.getElementById('user-greeting');
+    if (userGreeting) {
+      userGreeting.textContent = `Hi, ${user.name}`;
+      userGreeting.style.display = "inline";
+    }
+
+    const authButtons = document.getElementById('authButtons');
+    if (authButtons) authButtons.style.display = "none";
+
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) logoutBtn.style.display = "inline";
+  }
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("user");
+      window.location.reload();
+    });
+  }
+});
+
+// LOGIN / SIGNUP
+function toggleLogin() {
+  const loginForm = document.getElementById("loginForm");
+  const signupForm = document.getElementById("signupForm");
+  const title = document.getElementById("loginTitle");
+  const toggleLink = document.getElementById("toggleLogin");
+
+  const isLogin = loginForm.style.display !== "none";
+  loginForm.style.display = isLogin ? "none" : "block";
+  signupForm.style.display = isLogin ? "block" : "none";
+  title.innerText = isLogin ? "Sign Up" : "Login";
+  toggleLink.innerText = isLogin ? "Already have an account? Login" : "Don't have an account? Sign up";
+}
+
 function registerUser() {
-  const name = document.getElementById('signupName').value;
-  const email = document.getElementById('signupEmail').value;
-  const password = document.getElementById('signupPassword').value;
-  const confirm = document.getElementById('signupConfirm').value;
+  const name = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value;
+  const confirm = document.getElementById("signupConfirm").value;
+
+  if (!name || !email || !password || !confirm) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
   if (password !== confirm) {
-    alert("Passwords do not match");
+    alert("Passwords do not match.");
     return;
   }
 
   const user = { name, email, password };
-  localStorage.setItem('user', JSON.stringify(user));
-  localStorage.setItem('isLoggedIn', 'true');
-  updateUI();
-  closeLoginModal();
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("loggedIn", "true");
+  alert("Signup successful!");
+  window.location.href = "index.html";
 }
 
-// Login User
 function loginUser() {
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
 
-  const storedUser = JSON.parse(localStorage.getItem('user'));
-
-  if (storedUser && storedUser.email === email && storedUser.password === password) {
-    localStorage.setItem('isLoggedIn', 'true');
-    updateUI();
-    closeLoginModal();
+  const savedUser = JSON.parse(localStorage.getItem("user"));
+  if (savedUser && savedUser.email === email && savedUser.password === password) {
+    localStorage.setItem("loggedIn", "true");
+    alert("Login successful!");
+    window.location.href = "index.html";
   } else {
-    alert("Invalid credentials");
+    alert("Invalid email or password.");
   }
 }
-
-// Update UI after login/signup
-function updateUI() {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const authButtons = document.getElementById('authButtons');
-  const userAuth = document.getElementById('userAuth');
-  const greeting = document.getElementById('user-greeting');
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  if (isLoggedIn && user) {
-    authButtons.style.display = 'none';
-    userAuth.style.display = 'block';
-    greeting.innerText = `Hello, ${user.name}`;
-  } else {
-    authButtons.style.display = 'block';
-    userAuth.style.display = 'none';
-  }
-}
-
-// Logout
-function logoutUser() {
-  localStorage.setItem('isLoggedIn', 'false');
-  updateUI();
-}
-
-// Initial UI Check
-window.onload = function () {
-  updateUI();
-};
