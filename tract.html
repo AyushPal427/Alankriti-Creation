@@ -10,13 +10,29 @@
   <div class="tracking-container">
     <h1>📦 Track Your Order</h1>
     <p><strong>Order ID:</strong> #12345</p>
-    <ul class="tracking-steps">
-      <li class="done">✅ Order Received</li>
-      <li class="done">🚚 Shipped</li>
-      <li class="pending">📦 Out for Delivery</li>
-      <li class="pending">🏠 Delivered</li>
+    
+    <ul class="tracking-steps" id="steps">
+      <!-- JS will insert content here -->
     </ul>
+    
     <a href="index.html" class="btn">Back to Home</a>
   </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get("status");
+    const steps = document.getElementById("steps");
+
+    if (status === "failed") {
+      steps.innerHTML = `<li class="failed">❌ Payment Failed</li>`;
+    } else {
+      steps.innerHTML = `
+        <li class="done">✅ Order Received</li>
+        <li class="done">🚚 Shipped</li>
+        <li class="pending">📦 Out for Delivery</li>
+        <li class="pending">🏠 Delivered</li>
+      `;
+    }
+  </script>
 </body>
 </html>
