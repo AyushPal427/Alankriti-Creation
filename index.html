@@ -7,10 +7,23 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Hamburger Menu -->
-<div class="hamburger-menu" onclick="toggleMenu()">☰</div>
+  
+  <!-- Header -->
+<header>
+  <div class="brand">Alankriti Creations</div>
 
-<!-- Side Menu Content -->
+  <!-- ✅ Hamburger Menu inside header for better layout -->
+  <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#why">Why Us</a>
+    <a href="#products">Products</a>
+    <a href="cart.html">🛒 <span id="cart-count">0</span></a>
+  </nav>
+</header>
+
+<!-- ✅ Side Menu placed right below header -->
 <div class="side-menu" id="sideMenu">
   <ul>
     <li><a href="#">👤 Account Info</a></li>
@@ -19,17 +32,6 @@
     <li><a href="#">💬 Customer Support</a></li>
   </ul>
 </div>
-  
-  <!-- Header -->
-  <header>
-    <div class="brand">Alankriti Creations</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#why">Why Us</a>
-      <a href="#products">Products</a>
-      <a href="cart.html">🛒 <span id="cart-count">0</span></a>
-    </nav>
-  </header>
 
   <!-- Hero Section -->
 <section class="hero">
