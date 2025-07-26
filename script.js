@@ -43,7 +43,6 @@ function renderCart() {
   if (!cartItemsDiv || !cartTotalSpan) return;
 
   cartItemsDiv.innerHTML = '';
-
   if (cart.length === 0) {
     cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
     cartTotalSpan.innerText = '0';
@@ -51,7 +50,6 @@ function renderCart() {
   }
 
   let total = 0;
-
   cart.forEach((item, index) => {
     const itemTotal = item.price * item.qty;
     total += itemTotal;
@@ -79,9 +77,7 @@ function renderCart() {
 
 function changeQty(index, delta) {
   cart[index].qty += delta;
-  if (cart[index].qty <= 0) {
-    cart.splice(index, 1);
-  }
+  if (cart[index].qty <= 0) cart.splice(index, 1);
   saveCart();
   renderCart();
 }
@@ -92,11 +88,11 @@ function removeItem(index) {
   renderCart();
 }
 
+// Razorpay Checkout
 function checkoutRazorpay() {
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
   const options = {
-    key: "YOUR_RAZORPAY_KEY", // Replace with your actual key
+    key: "YOUR_RAZORPAY_KEY",
     amount: totalAmount * 100,
     currency: "INR",
     name: "Alankriti Creations",
@@ -133,11 +129,11 @@ function checkoutRazorpay() {
       color: "#333"
     }
   };
-
   const rzp = new Razorpay(options);
   rzp.open();
 }
 
+// WhatsApp Checkout
 function checkoutWhatsApp() {
   let message = 'Hello, I want to order:\n';
   cart.forEach(item => {
@@ -149,6 +145,7 @@ function checkoutWhatsApp() {
   window.open(`https://wa.me/919999999999?text=${encoded}`, '_blank');
 }
 
+// On page load
 document.addEventListener('DOMContentLoaded', () => {
   updateCartCount();
   renderCart?.();
@@ -158,57 +155,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (loggedIn && user?.name) {
     const userGreeting = document.getElementById('user-greeting');
-    if (userGreeting) {
-      userGreeting.textContent = `Hi, ${user.name}`;
-      userGreeting.style.display = "inline";
-    }
+    if (userGreeting) userGreeting.textContent = `Hi, ${user.name}`;
 
     const authButtons = document.getElementById('authButtons');
-    if (authButtons) authButtons.style.display = "none";
+    if (authButtons) authButtons.style.display = 'none';
 
-    const logoutBtn = document.getElementById("logoutBtn");
-    if (logoutBtn) logoutBtn.style.display = "inline";
-  }
-
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.removeItem("loggedIn");
-      localStorage.removeItem("user");
-      window.location.reload();
-    });
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.style.display = 'inline-block';
   }
 });
 
-// LOGIN / SIGNUP
+// Toggle Login/Signup
 function toggleLogin() {
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
-  const title = document.getElementById("loginTitle");
+  const loginTitle = document.getElementById("loginTitle");
   const toggleLink = document.getElementById("toggleLogin");
 
   const isLogin = loginForm.style.display !== "none";
   loginForm.style.display = isLogin ? "none" : "block";
   signupForm.style.display = isLogin ? "block" : "none";
-  title.innerText = isLogin ? "Sign Up" : "Login";
+  loginTitle.innerText = isLogin ? "Sign Up" : "Login";
   toggleLink.innerText = isLogin ? "Already have an account? Login" : "Don't have an account? Sign up";
 }
 
+// Signup
 function registerUser() {
   const name = document.getElementById("signupName").value.trim();
   const email = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value;
   const confirm = document.getElementById("signupConfirm").value;
 
-  if (!name || !email || !password || !confirm) {
-    alert("Please fill in all fields.");
-    return;
-  }
-
-  if (password !== confirm) {
-    alert("Passwords do not match.");
-    return;
-  }
+  if (!name || !email || !password || !confirm) return alert("Please fill in all fields.");
+  if (password !== confirm) return alert("Passwords do not match.");
 
   const user = { name, email, password };
   localStorage.setItem("user", JSON.stringify(user));
@@ -217,11 +196,12 @@ function registerUser() {
   window.location.href = "index.html";
 }
 
+// Login
 function loginUser() {
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value;
-
   const savedUser = JSON.parse(localStorage.getItem("user"));
+
   if (savedUser && savedUser.email === email && savedUser.password === password) {
     localStorage.setItem("loggedIn", "true");
     alert("Login successful!");
@@ -229,4 +209,10 @@ function loginUser() {
   } else {
     alert("Invalid email or password.");
   }
+}
+
+// Logout
+function logoutUser() {
+  localStorage.removeItem("loggedIn");
+  window.location.href = "index.html";
 }
