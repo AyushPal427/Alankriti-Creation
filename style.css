@@ -71,15 +71,17 @@ nav a:hover {
 /* Side Menu */
 .side-menu {
   position: fixed;
-  top: 60px; /* <-- Start below header */
+  top: 60px; /* below the header */
   left: -250px;
-  height: calc(100vh - 60px); /* <-- Full height minus header */
+  height: calc(100vh - 60px); /* full height minus header */
   width: 220px;
   background-color: #333;
   color: white;
   overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
   transition: left 0.3s ease-in-out;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .side-menu {
