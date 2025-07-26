@@ -187,6 +187,8 @@ function toggleLogin() {
   toggleLink.innerText = isLogin ? "Already have an account? Login" : "Don't have an account? Sign up";
 }
 
+document.getElementById("logoutBtn")?.addEventListener("click", logoutUser);
+
 // Signup
 function registerUser() {
   const name = document.getElementById("signupName").value.trim();
@@ -204,6 +206,8 @@ function registerUser() {
   window.location.href = "index.html";
 }
 
+if (!savedUser) return alert("No user found. Please sign up first.");
+
 // Login
 function loginUser() {
   const email = document.getElementById("loginEmail").value.trim();
@@ -218,6 +222,10 @@ function loginUser() {
     alert("Invalid email or password.");
   }
 }
+
+
+showToast("Login successful!");
+// instead of alert()
 
 // Logout
 function logoutUser() {
