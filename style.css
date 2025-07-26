@@ -58,6 +58,19 @@ nav a:hover {
   color: white;
 }
 
+#user-greeting {
+  margin-right: 15px;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
 /* Hamburger Icon */
 .hamburger-menu {
   position: absolute;
