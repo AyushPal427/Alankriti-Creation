@@ -173,3 +173,52 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 });
+
+// Handle login/signup form
+document.addEventListener("DOMContentLoaded", () => {
+  const loginForm = document.getElementById("loginForm");
+  const toggle = document.getElementById("toggleLogin");
+
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const isSignup = loginForm.dataset.signup === "true";
+      loginForm.dataset.signup = !isSignup;
+      loginForm.querySelector("button").textContent = isSignup ? "Login" : "Sign Up";
+      toggle.textContent = isSignup
+        ? "Don't have an account? Sign up"
+        : "Already have an account? Login";
+    });
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = loginForm.username.value.trim();
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value;
+
+      const isSignup = loginForm.dataset.signup === "true";
+
+      if (isSignup) {
+        const user = { name, email, password };
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("loggedIn", "true");
+        alert("Signup successful!");
+        window.location.href = "index.html";
+      } else {
+        const savedUser = JSON.parse(localStorage.getItem("user"));
+        if (
+          savedUser &&
+          savedUser.email === email &&
+          savedUser.password === password
+        ) {
+          localStorage.setItem("loggedIn", "true");
+          alert("Login successful!");
+          window.location.href = "index.html";
+        } else {
+          alert("Invalid credentials.");
+        }
+      }
+    });
+  }
+});
