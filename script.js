@@ -36,7 +36,10 @@ function updateCartCount() {
 }
 
 function toggleMenu() {
-  document.getElementById('sideMenu').classList.toggle('show');
+  const menu = document.getElementById("sideMenu");
+  if (menu) {
+    menu.classList.toggle("show");
+  }
 }
 
 // Render cart items in cart.html
