@@ -32,6 +32,10 @@ function updateCartCount() {
   if (counter) counter.innerText = count;
 }
 
+function openLoginModal() {
+  document.getElementById("loginModal").style.display = "block";
+}
+
 function toggleMenu() {
   const sideMenu = document.getElementById("sideMenu");
   sideMenu.classList.toggle("show");
